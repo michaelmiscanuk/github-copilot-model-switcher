@@ -1,0 +1,50 @@
+{
+    "name": "github-copilot-model-switcher",
+    "displayName": "Github Copilot Model Switcher",
+    "description": "Quickly switch between Copilot models with keyboard shortcuts",
+    "version": "1.0.5",
+    "publisher": "MichaelMiscanuk",
+    "engines": {
+        "vscode": "^1.95.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelmiscanuk/github-copilot-model-switcher.git"
+    },
+    "activationEvents": [
+        "onCommand:github-copilot-model-switcher.switchToSonnet46",
+        "onCommand:github-copilot-model-switcher.switchToGpt5Mini",
+        "onCommand:github-copilot-model-switcher.discoverCommands",
+        "onCommand:github-copilot-model-switcher.switchModel"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "github-copilot-model-switcher.switchToSonnet46",
+                "title": "Switch to Claude Sonnet 4.6"
+            },
+            {
+                "command": "github-copilot-model-switcher.switchToGpt5Mini",
+                "title": "Switch to GPT-5 mini"
+            },
+            {
+                "command": "github-copilot-model-switcher.discoverCommands",
+                "title": "Discover Copilot Commands"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^20.19.28",
+        "@types/vscode": "^1.95.0",
+        "typescript": "^5.9.3"
+    }
+}
