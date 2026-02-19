@@ -36,11 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
-// Default model information from VS Code Copilot
-const DEFAULT_MODELS = {
-    SONNET_46: { vendor: 'copilot', id: 'claude-sonnet-4.6', family: 'claude-sonnet-4.6' },
-    GPT5_MINI: { vendor: 'copilot', id: 'gpt-5-mini', family: 'gpt-5-mini' }
-};
 async function switchToModel(context, modelInfo, modelName) {
     try {
         // Show a temporary status bar message that disappears after 500ms
@@ -100,9 +95,15 @@ function activate(context) {
         }
         vscode.window.showInformationMessage(`Found ${copilotCommands.length} related commands. Check output panel.`);
     });
-    // Legacy commands for backward compatibility
-    const switchToSonnet = vscode.commands.registerCommand('github-copilot-model-switcher.switchToSonnet46', () => switchToModel(context, DEFAULT_MODELS.SONNET_46, 'Claude Sonnet 4.6'));
-    const switchToGpt5Mini = vscode.commands.registerCommand('github-copilot-model-switcher.switchToGpt5Mini', () => switchToModel(context, DEFAULT_MODELS.GPT5_MINI, 'GPT-5 mini'));
+    // Generic model slot commands — configure model IDs in VS Code settings
+    const switchToModel1 = vscode.commands.registerCommand('github-copilot-model-switcher.switchToModel1', () => {
+        const modelId = vscode.workspace.getConfiguration('github-copilot-model-switcher').get('model1Id', 'claude-sonnet-4.6');
+        return switchToConfiguredModel(context, modelId);
+    });
+    const switchToModel2 = vscode.commands.registerCommand('github-copilot-model-switcher.switchToModel2', () => {
+        const modelId = vscode.workspace.getConfiguration('github-copilot-model-switcher').get('model2Id', 'gpt-5-mini');
+        return switchToConfiguredModel(context, modelId);
+    });
     // New configurable command
     const switchModel = vscode.commands.registerCommand('github-copilot-model-switcher.switchModel', async (args) => {
         if (args?.modelId) {
@@ -112,7 +113,7 @@ function activate(context) {
             vscode.window.showErrorMessage('No model ID provided');
         }
     });
-    context.subscriptions.push(discoverCommands, switchToSonnet, switchToGpt5Mini, switchModel);
+    context.subscriptions.push(discoverCommands, switchToModel1, switchToModel2, switchModel);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

@@ -2,7 +2,7 @@
     "name": "github-copilot-model-switcher",
     "displayName": "Github Copilot Model Switcher",
     "description": "Quickly switch between Copilot models with keyboard shortcuts",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "publisher": "MichaelMiscanuk",
     "engines": {
         "vscode": "^1.95.0"
@@ -15,8 +15,8 @@
         "url": "https://github.com/michaelmiscanuk/github-copilot-model-switcher.git"
     },
     "activationEvents": [
-        "onCommand:github-copilot-model-switcher.switchToSonnet46",
-        "onCommand:github-copilot-model-switcher.switchToGpt5Mini",
+        "onCommand:github-copilot-model-switcher.switchToModel1",
+        "onCommand:github-copilot-model-switcher.switchToModel2",
         "onCommand:github-copilot-model-switcher.discoverCommands",
         "onCommand:github-copilot-model-switcher.switchModel"
     ],
@@ -24,18 +24,33 @@
     "contributes": {
         "commands": [
             {
-                "command": "github-copilot-model-switcher.switchToSonnet46",
-                "title": "Switch to Claude Sonnet 4.6"
+                "command": "github-copilot-model-switcher.switchToModel1",
+                "title": "Switch to Copilot Model 1"
             },
             {
-                "command": "github-copilot-model-switcher.switchToGpt5Mini",
-                "title": "Switch to GPT-5 mini"
+                "command": "github-copilot-model-switcher.switchToModel2",
+                "title": "Switch to Copilot Model 2"
             },
             {
                 "command": "github-copilot-model-switcher.discoverCommands",
                 "title": "Discover Copilot Commands"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Github Copilot Model Switcher",
+            "properties": {
+                "github-copilot-model-switcher.model1Id": {
+                    "type": "string",
+                    "default": "claude-sonnet-4.6",
+                    "description": "Model ID for Model 1 shortcut (Alt+F11). Run 'Discover Copilot Commands' to see available model IDs."
+                },
+                "github-copilot-model-switcher.model2Id": {
+                    "type": "string",
+                    "default": "gpt-5-mini",
+                    "description": "Model ID for Model 2 shortcut (Alt+F12). Run 'Discover Copilot Commands' to see available model IDs."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
